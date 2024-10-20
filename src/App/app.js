@@ -6,7 +6,6 @@ import { importRoutes } from '../Config/routeHandler.config.js';
 import { corsConfigGetPost, corsConfigAll } from '../Middlewares/cors.middleware.js';
 import { rateLimitMiddleware } from '../Middlewares/rateLimiter.middleware.js';
 import { notFoundMiddleware } from '../Middlewares/notFound.middleware.js';
-import sequelize from '../Database/sequelize.js'
 
 dotenv.config({ path: '.env' });
 

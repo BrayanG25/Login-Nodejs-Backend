@@ -24,7 +24,7 @@ export const loginUser = async (req, res) => {
         // Check if user already exists
         const userRecord = await findUserByEmail(email);
         if (!userRecord) {
-            return await sendStandardResponse(res, false, 'The email address is not registered.', 400, [{ field: 'email', message: 'User unregistered.' }]);ñ
+            return await sendStandardResponse(res, false, 'The email address is not registered.', 400, [{ field: 'email', message: 'User unregistered.' }]);
         }
 
         // Validate password
@@ -47,7 +47,7 @@ export const loginUser = async (req, res) => {
             value: token,
             options: { 
                 httpOnly: true, // The cookie can only be accessed from the server
-                secure: process.env.NODE_ENV === 'DEVELOPMENT' ? false : true, // The cookie can only be accessed on https
+                secure: process.env.NODE_ENV === 'DEVELOPMENT', // The cookie can only be accessed on https
                 sameSite: 'strict', // The cookie can only be accessed on the same https domain
                 maxAge: 1000 * 60 * 60 // The cookie has a validity period of one hour, although the token remains the same
             }
@@ -97,7 +97,7 @@ export const registerUser = async (req, res) => {
             value: token,
             options: { 
                 httpOnly: true, // The cookie can only be accessed from the server
-                secure: process.env.NODE_ENV === 'DEVELOPMENT' ? false : true, // The cookie can only be accessed on https
+                secure: process.env.NODE_ENV === 'DEVELOPMENT', // The cookie can only be accessed on https
                 sameSite: 'strict', // The cookie can only be accessed on the same https domain
                 maxAge: 1000 * 60 * 60 // The cookie has a validity period of one hour, although the token remains the same
             }

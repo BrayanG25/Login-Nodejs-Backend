@@ -9,7 +9,7 @@ import { z } from 'zod';
 const passwordMinLength = 8;
 const passwordLowerCaseRegex = /[a-z]/;
 const passwordUpperCaseRegex = /[A-Z]/;
-const passwordNumberRegex = /[0-9]/;
+const passwordNumberRegex = /\d/;
 const passwordSymbolRegex = /[!@#$%^&*(),.?":{}|<>]/;
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;

@@ -1,7 +1,7 @@
 import { sendStandardResponse } from '../Utils/responseBuilder.util.js';
 import { validateRegisterUser, validateLoginUser } from '../Schemas/user.schema.js';
-import { findUserByEmail, createUser, validatePassword } from '../Service/auth.service.js';
-import { generateToken, verifyToken } from '../Service/jwt.service.js';
+import { findUserByEmail, findUserById, createUser, validatePassword } from '../Service/auth.service.js';
+import { generateToken } from '../Service/jwt.service.js';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '.env' });
@@ -40,7 +40,7 @@ export const loginUser = async (req, res) => {
         };
 
         // Generate JSON web token
-        const token = generateToken(user);
+        const token = await generateToken(user);
 
         await sendStandardResponse(res, true, 'Successfully login user', 200, user, {
             name: 'access_token',
@@ -90,7 +90,7 @@ export const registerUser = async (req, res) => {
         };
 
         // Generate JSON web token
-        const token = generateToken(user);
+        const token = await generateToken(user);
 
         return await sendStandardResponse(res, true, 'Operation successful', 200, user, {
             name: 'access_token',
@@ -120,20 +120,25 @@ export const logoutUser = async (req, res) => {
     }
 }
 
-// Controller to protected path user
-export const protectedPathUser = async (req, res) => {
+// Controller to profile path user
+export const profile = async (req, res) => {
     try {
-        const { access_token: accessToken } = req.cookies;
-        
-        if (!accessToken) {
-            return await sendStandardResponse(res, false, 'Access not authorized', 403);
+        // Check if user already exists
+        const userRecord = await findUserById(req.decoded.user_id);
+        if (!userRecord) {
+            return await sendStandardResponse(res, false, 'User not found.', 400, [{ field: 'user_id', message: 'User unregistered.' }]);
         }
 
-        const { valid, status, message, data} = await verifyToken(accessToken);
-        return await sendStandardResponse(res, valid, message, status, data);
+        // Return relevant user data in the response
+        const user = {
+            user_id: userRecord?.user_id,
+            username: userRecord?.username,
+        };
+
+        return await sendStandardResponse(res, true, 'Profile succesfully', 200, user);
 
     } catch (error) {
-        console.error('Error protected path user user', error);
+        console.error('Error profile path user', error);
         await sendStandardResponse(res, false, 'Internal server error', 500);
     }
 }

@@ -15,6 +15,16 @@ export const findUserByEmail = async (email) => {
     }
 };
 
+export const findUserById = async (id) => {
+    try {
+        const user = await User.findOne({ where: { user_id: id } });
+        return user ? user.dataValues : null;
+        
+    } catch (error) {
+        throw new Error('Error fetching user from the database');
+    }
+};
+
 const hashPassword = async (password) => {
     try {
         const SALT_ROUNDS = Number(process.env.SALT_ROUNDS) || 5;

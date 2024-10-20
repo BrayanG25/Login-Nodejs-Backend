@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { promisify } from 'node:util';
 
 dotenv.config({ path: '.env' });
 
@@ -40,11 +41,14 @@ const DEFAULT_TOKEN_DATA = {
     exp: Date.now() + parseDuration(JWT_EXPIRATION) 
 };
 
+// Convert jwt.sign to async function
+const signAsync = promisify(jwt.sign);
+
 // Generate JWT token
-export const generateToken = (payload) => {
+export const generateToken = async (payload) => {
     try {
         const tokenData = { ...payload, ...DEFAULT_TOKEN_DATA };
-        return jwt.sign(tokenData, JWT_SECRET_KEY, { algorithm: 'HS256' });
+        return await signAsync(tokenData, JWT_SECRET_KEY, { algorithm: 'HS256' });
 
     } catch (error) {
         throw new Error('Error generating the token');

@@ -44,5 +44,15 @@ User.init(
         modelName: 'user',
         timestamps: false,
         tableName: 'user',
+        hooks: {
+            beforeValidate: (user) => {
+                if (typeof user.username === 'string') {
+                    user.username = user.username.trim();
+                }
+                if (typeof user.email === 'string') {
+                    user.email = user.email.trim();
+                }
+            },
+        },
     }
 );

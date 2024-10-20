@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { loginUser, registerUser, logoutUser, protectedPathUser } from '../Controllers/user.controller.js';
+import { loginUser, registerUser, logoutUser, profile } from '../Controllers/user.controller.js';
+import { authRequired } from '../Middlewares/validateToken.middleware.js';
 
 const router = Router();
 
@@ -12,7 +13,7 @@ router.post('/register', registerUser);
 // Logout a user
 router.post('/logout', logoutUser);
 
-// Protected path
-router.post('/protected', protectedPathUser);
+// Profile a user
+router.get('/profile', authRequired, profile);
 
 export default router;

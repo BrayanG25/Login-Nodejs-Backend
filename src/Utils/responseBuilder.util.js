@@ -20,7 +20,7 @@ export const sendStandardResponse = async (res, success, message, status = null,
     const responseFunction = success ? buildSuccessResponse : buildErrorResponse;
     const responseObject = responseFunction(message, data, responseStatus);
 
-    if (cookie?.name && cookie.value) {
+    if (cookie?.name && cookie?.value) {
         res.cookie(cookie.name, cookie.value, cookie.options || {});
     }
     

@@ -3,8 +3,8 @@ import { fileURLToPath  } from 'node:url';
 import fs from 'node:fs/promises';
 import cors from 'cors';
 
-const allowedOriginsGetPost = ['http://localhost:4001'];
-const allowedOriginsAll = ['http://localhost:4001'];
+const allowedOriginsGetPost = ['http://localhost:4001','http://localhost:5173'];
+const allowedOriginsAll = ['http://localhost:4001','http://localhost:5173'];
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const createCorsOptions = (allowedOrigins, allowedMethods) => {

@@ -47,7 +47,7 @@ export const loginUser = async (req, res) => {
             value: token,
             options: { 
                 httpOnly: true, // The cookie can only be accessed from the server
-                secure: process.env.NODE_ENV === 'DEVELOPMENT', // The cookie can only be accessed on https
+                secure: process.env.NODE_ENV !== 'DEVELOPMENT', // The cookie can only be accessed on https
                 sameSite: 'strict', // The cookie can only be accessed on the same https domain
                 maxAge: 1000 * 60 * 60 // The cookie has a validity period of one hour, although the token remains the same
             }
@@ -97,7 +97,7 @@ export const registerUser = async (req, res) => {
             value: token,
             options: { 
                 httpOnly: true, // The cookie can only be accessed from the server
-                secure: process.env.NODE_ENV === 'DEVELOPMENT', // The cookie can only be accessed on https
+                secure: process.env.NODE_ENV !== 'DEVELOPMENT', // The cookie can only be accessed on https
                 sameSite: 'strict', // The cookie can only be accessed on the same https domain
                 maxAge: 1000 * 60 * 60 // The cookie has a validity period of one hour, although the token remains the same
             }
